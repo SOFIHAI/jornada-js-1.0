@@ -1,6 +1,6 @@
 import {TitlePpal , createTable, loadEvents, loadUser, modificar} from '../helpers/administradorHelpers.js'; 
 import {bodyUser, bodyEvent } from '../helpers/helpDB.js'; 
-import navbar from "./navBar.js";
+import {navbar} from "./navBar.js";
 import myFooter from "./footer.js";
 const location = window.location.pathname; 
 
