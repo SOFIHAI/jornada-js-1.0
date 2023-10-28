@@ -1,7 +1,8 @@
-import {event, users,rolUser } from '../helpers/helpDB.js'; 
+import {rolUser } from '../helpers/helpDB.js'; 
 import { deleteChildNode } from '../service/serviceAdministrador.js';
-const events = JSON.parse(localStorage.getItem("listEvents")) || event; 
-const user = JSON.parse(localStorage.getItem("listaUsuarios"))  || users; 
+import dataConf from "../db.json" assert {type:'json'};
+const events = JSON.parse(localStorage.getItem("charlaInfo")) || dataConf.charlas; 
+const user = JSON.parse(localStorage.getItem("listaUsuarios"))  || dataConf.usuarios; 
 function TitlePpal (text) {
     const title = document.createElement("h3"); 
     title.innerText = `Administador de ${text}`; 
@@ -19,6 +20,7 @@ function createTable(titles, id){
         const element = titles[index];
         const th = document.createElement("th"); 
         th.scope = "col"; 
+        th.classList = "px-2";
         th.innerText = element; 
         thead.appendChild(th); 
     }
@@ -40,7 +42,11 @@ function loadEvents(bodyTable){
             row.appendChild(column);
 
             column = document.createElement("td");
-            column.innerText = event.imagen;
+            let img = document.createElement('img');
+            img.style.width = '5rem';
+            img.src = `${ event.imagen}`;
+            img.alt = `portada_${event.imagen.slice(9,event.imagen.indexOf(".jpg"))}`
+            column.appendChild(img);
             row.appendChild(column);
 
             column = document.createElement("td");
@@ -61,6 +67,7 @@ function loadEvents(bodyTable){
 
             column = document.createElement("td");
             column.innerText = event.asistentes.length;
+            column.classList= "px-2"
             row.appendChild(column);
 
             column = document.createElement("td");
@@ -157,7 +164,7 @@ function eliminarFila(tipe,id, file) {
                 }
                 return event; 
             });
-            localStorage.setItem("listEvents" , JSON.stringify(events)); 
+            localStorage.setItem("charlaInfo" , JSON.stringify(events)); 
         }
       file.remove();
       

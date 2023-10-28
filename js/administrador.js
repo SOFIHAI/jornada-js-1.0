@@ -4,6 +4,13 @@ import navbar from "./navBar.js";
 import myFooter from "./footer.js";
 const location = window.location.pathname; 
 
+const adminLogueado = JSON.parse(localStorage.getItem('adminLogueado')) || false;
+
+if (!adminLogueado) {
+  let interval = setInterval(() => {
+      window.location.href = '../index.html'
+  }, 100)
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   navbar();

@@ -42,7 +42,31 @@ formulario.addEventListener('submit', (e) => {
     const password = document.getElementById('password').value;
 
     if (email === "administrador@administrador.com" && password === "administrador") {
+        const usuarioValidado = {
+            email: email,
+            password: password, 
+            usuarioValido: true
+        }
+        localStorage.setItem("user",  JSON.stringify(usuarioValidado))
         localStorage.setItem('adminLogueado', true);
+        Swal.fire({
+            toast: true,
+            icon: "success",
+            color: "white",
+            background: "green",
+            title: "Bienvenido!",
+            position: "bottom-start",
+            showConfirmButton: false,
+            timer: 3000,
+        });
+        let interval = setInterval(() => {
+            window.location.href = '../index.html'
+        }, 2000)
+        return;
+    }
+
+    if (email === "speaker@speaker.com" && password === "speaker") {
+        localStorage.setItem('speakerLogueado', true);
         Swal.fire({
             toast: true,
             icon: "success",
@@ -76,7 +100,11 @@ formulario.addEventListener('submit', (e) => {
         });
         return;
     }
-
+    const usuarioValidado = {
+        ...usuarioValido, 
+        usuarioValido: true
+    }
+    localStorage.setItem("user",  JSON.stringify(usuarioValidado))
     localStorage.setItem('usuarioLogueado', JSON.stringify('usuarioValido'));
     Swal.fire({
         toast: true,

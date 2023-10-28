@@ -2,44 +2,55 @@ const footer = document.querySelector("footer");
 
 const myFooter = () => {
   const user = JSON.parse(localStorage.getItem("userLog")) || undefined;
-  return (footer.innerHTML = `<section class="container-fluid mt-5 footer bg-dark p-3">
-  <div class="row justify-content-around" id="cuerpoFooter">
-    <aside class="col-xl-3 col-sm-3 col-md-3">
-      <p class="h5 text-white text-center">Rolling Conf</p>
-      <ul>
-        <li>General Paz 576</li>
-        <li>Teléfono: + 381 5783030</li>
-        <li>Email: rollingcodeschool@gmail.com</li>
-      </ul>
-    </aside>
-   
-    <aside class="col-xl-3 col-sm-3 col-md-3 aside-footer">
-      <p class="h5 text-white text-center">Legal</p>
-      <ul>
-        <li><a href="#">Términos y condiciones</a></li>
-        <li><a href="#">Política de privacidad</a></li>
-        
-      </ul>
-    </aside>
-    <aside class="col-xl-3 col-sm-3 col-md-3">
-      <p class="h5 text-white text-center">Redes Sociales</p>
-      <ul>
-        <li>
-        <a href="https://www.facebook.com/RollingCodeSchool/?locale=es_LA" class="img-redessociales"><i class="fa-brands fa-square-facebook"></i>
-      </a>
-        </li>
-        <a href="https://www.youtube.com/watch?v=FIK49iC1EwE&t=2s" class="img-redessociales"><i class="fa-brands fa-youtube"></i></a>
-        <li>
+  return (footer.innerHTML = `
+  <section class="container footer col-12 pt-2 px-5 m-0 text-white">
+        <div class="container d-flex justify-content-between flex-column flex-sm-row text-center">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="../assets/logo2.png" class="img-fluid" alt="Logo de página" width="150" height="130">
+                </a>
 
-        <a href="https://www.instagram.com/rollingcodeschool/" class="img-redessociales"><i class="fa-brands fa-instagram"></i></a>
-        </li>
-      </ul>
-    </aside>
-  </div>
-  <div class="row text-white" id="copyrightFooter">
-    <p class="h6 text-center">&copy; 2023 Todos los derechos reservados.</p>
-  </div>
-</section>`);
+            </div>
+
+            <div class="contacto">
+                <h2>Contacto</h2>
+                <div class="d-flex flex-column">
+                    <a class="linksFooter">Sobre Nosotros</a>
+                    <a class="linksFooter" onclick='window.location.href="./html/error404.html"'>Soporte</a>
+                    <a class="linksFooter" id="botonPolitica">Política de Privacidad</a>
+                    <a class="linksFooter" id="botonTerminos">Términos y Condiciones</a>
+                </div>
+            </div>
+
+            <div class="lugar">
+                <h2>Nuestro Lugar</h2>
+                <p class="m-0">General Paz 576</p>
+                <p class="m-0">Tucumán 4000</p>
+                <p class="m-0">T: (381) 578 3030</p>
+                <p class="m-0">rollingcode@gmail.com</p>
+            </div>
+
+            <div class="redes">
+                <h2>Síguenos</h2>
+                <div class="red-social">
+                    <a href="https://es-la.facebook.com/" target="_blank"><i
+                            class="bi bi-facebook redes-sociales"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i
+                            class="bi bi-instagram redes-sociales"></i></a>
+                    <a href="https://github.com/" target="_blank"><i class="bi bi-github redes-sociales"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border border-light">
+
+        <div class="container-fluid text-center">
+            <div>&copy; 2023 <b>Display: Center, <a class="linksFooter" href="https://rollingcodeschool.com/">Rolling
+                        Code</a> - Todos los Derechos Reservados.</b>
+            </div>
+        </div>
+    </section>`
+);
 };
 
 export default myFooter;
