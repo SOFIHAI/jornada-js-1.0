@@ -3,7 +3,7 @@ const footer = document.querySelector("footer");
 const myFooter = () => {
   const user = JSON.parse(localStorage.getItem("userLog")) || undefined;
   return (footer.innerHTML = `
-  <section class="container footer col-12 pt-2 px-5 m-0 text-white">
+  <section class="container-fluid footer col-12 pt-2 px-5 m-0 text-white">
         <div class="container d-flex justify-content-between flex-column flex-sm-row text-center">
             <div class="logo">
                 <a href="index.html">

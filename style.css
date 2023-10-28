@@ -62,7 +62,7 @@ color: var(--AntiFlash-White-);
 
 .modal-footer {
   display: flex !important;
-  justify-content: space-between !important;
+  /* justify-content: space-between !important; */
 }
 
 .cardConfContainer {
@@ -163,6 +163,7 @@ color: var(--AntiFlash-White-);
 /***************************/
 .footer {
   background-color: #09090a;
+  margin-top: 50px !important;
 }
 
 #navBarPrincipal {
