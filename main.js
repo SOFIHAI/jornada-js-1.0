@@ -17,13 +17,14 @@ console.log(dataConf.charlas);
 
 //Variables 
 const infoConfContainer = document.querySelector('.infoConfContainer');
+const modalContainer = document.querySelector('.modalContainer');
 let charlas = [];
 
 //Instancias
 const loadInfoSection = () => {
   charlas = [];
   dataConf.charlas.forEach(element => {
-    charlas.push(new RenderConfSection(element.imagen, element.orador, element.título, element.hora, element.descripción))
+    charlas.push(new RenderConfSection(element.id, element.imagen, element.orador, element.título, element.hora, element.descripción))
   });
 }
 
@@ -38,6 +39,12 @@ const renderInfoSection = () => {
 }
 
 renderInfoSection();
+
+const renderModal = () => {
+  charlas.forEach(charla => {
+    charla.renderModal(modalContainer, charla.id)
+  })
+}
 
 document.querySelector("#btn-talks").addEventListener("click", () => {
   getCharlas().then((respuesta) => {

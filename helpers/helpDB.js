@@ -53,7 +53,11 @@ const event =  [
 const users = [
     { "id": 1, "nombre": "json-server", "password": "typicode","email":"usuario@user.com", "estado": true , "rol": "ADMIN", "avatar":"https://w7.pngwing.com/pngs/254/985/png-transparent-actor-avatar-people-person-profile-user-voice-user-avatar-icon.png" }
 ]
-
+const rolUser = ["ADMIN", "USER", "SPEAKER"];
+const bodyUser = ["ID", "Nombre y Apellido", "Correo", "Rol", "Operaciones"];
+const bodyEvent = ["ID", "Imagen", "Titulo", "Descripción", "Hora", "Orador",  "Asistentes", "Operaciones"]; 
 export {
-    event, users
+    event, users,   
+    bodyUser,bodyEvent,
+    rolUser
 }

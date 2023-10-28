@@ -1,14 +1,14 @@
-import {event, users} from '../helpers/helpDB.js'; 
+import {event, users,rolUser } from '../helpers/helpDB.js'; 
+import { deleteChildNode } from '../service/serviceAdministrador.js';
 const events = JSON.parse(localStorage.getItem("listEvents")) || event; 
-const user = JSON.parse(localStorage.getItem("listUsers"))  || users; 
+const user = JSON.parse(localStorage.getItem("listaUsuarios"))  || users; 
 function TitlePpal (text) {
     const title = document.createElement("h3"); 
     title.innerText = `Administador de ${text}`; 
     title.classList = "text-center"
     return title; 
 }
-const bodyUser = ["ID", "Nombre y Apellido", "Correo", "Rol", "Operaciones"];
-const bodyEvent = ["ID", "Imagen", "Titulo", "Descripción", "Hora", "Orador",  "Asistentes", "Operaciones"]; 
+
 function createTable(titles, id){
     const container = document.createElement("article"); 
     container.classList = "row my-4 d-flex justify-content-center table-responsive mx-1"; 
@@ -59,8 +59,6 @@ function loadEvents(bodyTable){
             column.innerText = event.orador;
             row.appendChild(column);
 
-
-
             column = document.createElement("td");
             column.innerText = event.asistentes.length;
             row.appendChild(column);
@@ -73,28 +71,10 @@ function loadEvents(bodyTable){
             buttonDelete.id = 'btnEliminarUsuario';
             buttonDelete.addEventListener('click', (event) => {
            let fila = event.target.parentNode.parentNode.parentNode,
-                idUsuario = fila.getElementsByTagName('td')[0].innerText;
-              //eliminarUsuario(idUsuario, fila);
+                idEvent = fila.getElementsByTagName('td')[0].innerText;
+                eliminarFila("event", idEvent, fila); 
             });
             column.appendChild(buttonDelete);
-          
-            let buttonUpdate = document.createElement("button");
-            buttonUpdate.innerHTML = `<i class="bi bi-pencil-square"></i>`;
-            buttonUpdate.className = 'btn btn-warning ';
-            buttonUpdate.id = 'btnModificarUsuario';
-            buttonUpdate.addEventListener('click', (event) => {
-              const fila = event.target.parentNode.parentNode.parentNode,
-                idUsuario = fila.getElementsByTagName('td')[0].innerText,
-                estadoUsuario = {
-                  rolUsuario: fila.getElementsByTagName('td')[4].innerText,
-                  estadoUsuario: fila.getElementsByTagName('td')[5].innerText
-                }
-             // localStorage.setItem("idUsuarioModificar", JSON.stringify(idUsuario));
-              //cargarEstadoUsuario(idUsuario, estadoUsuario);
-            });
-            buttonUpdate.setAttribute('data-bs-toggle', 'modal');
-            buttonUpdate.setAttribute('data-bs-target', '#modificarUsuarioModal');
-            column.appendChild(buttonUpdate);
           
             row.appendChild(column);
             bodyTable.appendChild(row);
@@ -102,6 +82,7 @@ function loadEvents(bodyTable){
     });
 }
 function loadUser(bodyTable) {
+    deleteChildNode(bodyTable); 
     user?.forEach(u => {
         if(u.estado){
             let row = document.createElement('tr');
@@ -133,8 +114,8 @@ function loadUser(bodyTable) {
             buttonDelete.id = 'btnEliminarUsuario';
             buttonDelete.addEventListener('click', (event) => {
            let fila = event.target.parentNode.parentNode.parentNode,
-                idUsuario = fila.getElementsByTagName('td')[0].innerText;
-              //eliminarUsuario(idUsuario, fila);
+                idUser = fila.getElementsByTagName('td')[0].innerText;
+                eliminarFila("user", idUser, fila); 
             });
             column.appendChild(buttonDelete);
           
@@ -145,15 +126,12 @@ function loadUser(bodyTable) {
             buttonUpdate.addEventListener('click', (event) => {
               const fila = event.target.parentNode.parentNode.parentNode,
                 idUsuario = fila.getElementsByTagName('td')[0].innerText,
-                estadoUsuario = {
-                  rolUsuario: fila.getElementsByTagName('td')[4].innerText,
-                  estadoUsuario: fila.getElementsByTagName('td')[5].innerText
-                }
-             // localStorage.setItem("idUsuarioModificar", JSON.stringify(idUsuario));
-              //cargarEstadoUsuario(idUsuario, estadoUsuario);
+                rolUsuario= fila.getElementsByTagName('td')[3].innerText; 
+                localStorage.setItem("idUpdateUser", idUsuario); 
+              rol(rolUsuario); 
             });
             buttonUpdate.setAttribute('data-bs-toggle', 'modal');
-            buttonUpdate.setAttribute('data-bs-target', '#modificarUsuarioModal');
+            buttonUpdate.setAttribute('data-bs-target', '#modalUser');
             column.appendChild(buttonUpdate);
           
             row.appendChild(column);
@@ -162,10 +140,70 @@ function loadUser(bodyTable) {
 
     });
 }
+function eliminarFila(tipe,id, file) {
+    if (confirm(`¿Desea Eliminar el ${tipe} seleccionado?`)) {
+        if(tipe == "user"){
+            user.map(user => {
+                if(user.id == parseInt(id)){
+                    user.estado =false; 
+                }
+                return user; 
+            });
+            localStorage.setItem("listaUsuarios" , JSON.stringify(user)); 
+        }else{
+            events.map(event => {
+                if(event.id == parseInt(id)){
+                    event.estado =false; 
+                }
+                return event; 
+            });
+            localStorage.setItem("listEvents" , JSON.stringify(events)); 
+        }
+      file.remove();
+      
+    }
+  }
+  function rol(rol){
+    const select = document.getElementById("selectRol"); 
+    deleteChildNode(select); 
+    let nuevaOpcion = null;
+    nuevaOpcion = document.createElement("option");
+    nuevaOpcion.text = "Seleccionar una opcion";
+    nuevaOpcion.value = "";
+    nuevaOpcion.disabled = true;
+    select.appendChild(nuevaOpcion);
+    for (let estado in rolUser) {
+        if (rolUser[estado] === rol) {
+            nuevaOpcion = document.createElement("option");
+            nuevaOpcion.text = rolUser[estado];
+            nuevaOpcion.value = rolUser[estado];
+            nuevaOpcion.selected = true;
+            select.appendChild(nuevaOpcion);
+        } else {
+            nuevaOpcion = document.createElement("option");
+            nuevaOpcion.text = rolUser[estado];
+            nuevaOpcion.value = rolUser[estado];
+            select.appendChild(nuevaOpcion);
+        }
+    }
+  }
+  function modificar(rol, body){
+    let idUser = localStorage.getItem("idUpdateUser"); 
+    user.map(user => {
+        if(user.id == parseInt(idUser)){
+            user.rol =rol; 
+        }
+        return user; 
+    });
+    localStorage.setItem("listaUsuarios" , JSON.stringify(user)); 
+    console.log(idUser, rol);
+    loadUser(body); 
+    return window.location.reload(); 
+  }
 export {
     TitlePpal,
-    bodyUser,bodyEvent,
     createTable,
     loadEvents,
-    loadUser
+    loadUser,
+    modificar
 }
