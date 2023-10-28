@@ -1,6 +1,6 @@
 import dataConf from "./db.json" assert {type:'json'};
 import myFooter from "./js/footer.js";
-import navbar from "./js/navBar.js";
+import {navbar }from "./js/navBar.js";
 
 localStorage.setItem("charlaInfo", JSON.stringify(dataConf.charlas));
 

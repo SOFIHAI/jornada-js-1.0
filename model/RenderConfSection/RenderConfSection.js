@@ -38,8 +38,8 @@ const renderInfoModal = (id) => {
   console.log(modalInfo);
   const modalTitle = document.querySelector(".modal-title");
   modalTitle.innerHTML = modalInfo.título;
-  const modalfooter = document.querySelector(".modal-footer");
-  const modalbody = document.querySelector(".modal-body");
+  const modalfooter = document.querySelector(".modalFooter");
+  const modalbody = document.querySelector(".modalBody");
   modalbody.innerHTML = `
     <p>${modalInfo.descripción}</p>
     <div class="oradorContainer">

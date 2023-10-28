@@ -25,6 +25,9 @@ const navbar = () => {
 
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
+                    <li class="nav-item mx-3 my-3">
+                    <button type="button" class="btn btn-outline-light w-100" data-bs-toggle="modal" data-bs-target="#exampleModalNavBar">Crear charla</button>
+                </li>
                         ${adminLogueado || usuarioLogueado || speakerLogueado
       ? ""
       : `
@@ -44,8 +47,11 @@ const navbar = () => {
                         ${adminLogueado
       ? `
                           <li class="nav-item mx-3 my-3">
-                            <a href="../pages/administrador.html" class="btn btn-outline-light w-100">Panel admin</a>
+                            <a href="../pages/administrador.html" class="btn btn-outline-light w-100">Administrar Eventos</a>
                         </li>
+                        <li class="nav-item mx-3 my-3">
+                        <a href="../pages/administradorUsuarios.html" class="btn btn-outline-light w-100">Administrar Usuario</a>
+                         </li>
                           `
       : ``
     }
@@ -74,7 +80,7 @@ const navbar = () => {
     
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalNavBar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -82,14 +88,16 @@ const navbar = () => {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form>
+      <form onsubmit="cargarCharla()" class= "needs-validation" >
           <div class="mb-3">
             <label for="exampleInput" class="form-label">Titulo</label>
-            <input type="text" class="form-control" id="exampleInput">
+            <input type="text" class="form-control" id="exampleInput" required>
+            <div class="invalid-feedback"> Por Favor! ingrese un titulo</div>
           </div>
           <div class="mb-3">
             <label for="exampleInput" class="form-label">Orador</label>
-            <input type="text" class="form-control" id="exampleInput">
+            <input type="text" class="form-control" id="exampleInput" required>
+            <div class="invalid-feedback"> Por Favor! ingrese un titulo</div>
           </div>
           <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
@@ -105,5 +113,21 @@ const navbar = () => {
 </div>
 `);
 };
+function cargarCharla(){
+    const forms = document.querySelectorAll('.needs-validation')
 
-export default navbar;
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+  
+        form.classList.add('was-validated')
+      }, false)
+    })
+}
+export {
+    navbar
+} ;
