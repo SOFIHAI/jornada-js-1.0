@@ -1,32 +1,55 @@
+import dataConf from "./db.json" assert {type:'json'};
+import myFooter from "./js/footer.js";
+import navbar from "./js/navBar.js";
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  navbar();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  myFooter();
+});
+
 console.log("Hola mundo");
 
-let url = "http://localhost:3000";
+console.log(dataConf.charlas);
 
-//traer usuarios de la BD
+//Variables 
+const infoConfContainer = document.querySelector('.infoConfContainer');
+const modalContainer = document.querySelector('.modalContainer');
+let charlas = [];
 
-const getUsuarios = async () => {
-  const resp = await fetch(url + "/" + "usuarios");
-  const data = await resp.json();
-
-  return data;
-};
-
-//Traer las charlas
-const getCharlas = async () => {
-  const resp = await fetch(url + "/" + "charlas");
-  const data = await resp.json();
-
-  return data;
-};
-
-document.querySelector("#btn-user").addEventListener("click", () => {
-  getUsuarios().then((respuesta) => {
-    console.log(respuesta);
+//Instancias
+const loadInfoSection = () => {
+  charlas = [];
+  dataConf.charlas.forEach(element => {
+    charlas.push(new RenderConfSection(element.id, element.imagen, element.orador, element.título, element.hora, element.descripción))
   });
-});
+}
+
+loadInfoSection();
+
+console.log(charlas);
+
+const renderInfoSection = () => {
+  charlas.splice(charlas.length-3).forEach(charla => {
+    charla.render(infoConfContainer)
+  })
+}
+
+renderInfoSection();
+
+const renderModal = () => {
+  charlas.forEach(charla => {
+    charla.renderModal(modalContainer, charla.id)
+  })
+}
 
 document.querySelector("#btn-talks").addEventListener("click", () => {
   getCharlas().then((respuesta) => {
     console.log(respuesta);
   });
 });
+
+
